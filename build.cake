@@ -1,8 +1,8 @@
 // Install tools
-#tool nuget:?package=NUnit.ConsoleRunner&version=3.4.0
+#tool nuget:?package=NUnit.ConsoleRunner&version=3.16.3
 
 // Install .NET Core Global tools.
-#tool "dotnet:?package=GitVersion.Tool&version=5.9.0"
+#tool dotnet:?package=GitVersion.Tool&version=5.12.0
 
 ///////////////////////////////////////////////////////////////////////////////
 // ARGUMENTS
@@ -169,7 +169,15 @@ Task("Upload-AppVeyor-Artifacts")
 
 Task("Publish-MyGet")
     .IsDependentOn("Package")
-    .WithCriteria((AppVeyor.IsRunningOnAppVeyor && !AppVeyor.Environment.PullRequest.IsPullRequest)
+    .WithCriteria(
+        (
+            AppVeyor.IsRunningOnAppVeyor &&
+            !AppVeyor.Environment.PullRequest.IsPullRequest &&
+            (
+                !AppVeyor.Environment.Repository.Branch.Equals("master", StringComparison.OrdinalIgnoreCase) ||
+                AppVeyor.Environment.Repository.Tag.IsTag
+            )
+        )
         || StringComparer.OrdinalIgnoreCase.Equals(target, "Publish-MyGet"))
     .Does(() => {
 

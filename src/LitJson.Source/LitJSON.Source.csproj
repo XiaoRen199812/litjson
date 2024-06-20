@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>net6.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
         <IsPackable>true</IsPackable>
         <PackBuildOutput>false</PackBuildOutput>
         <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
@@ -18,19 +18,21 @@
         <RepositoryUrl>https://github.com/LitJSON/litjson</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>JSON;Serializer</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageFile Include="../LitJson/**/*.cs" Exclude="../LitJson/obj/**;../LitJson/bin/**;../LitJson/AssemblyInfo.cs" PackagePath="$(ContentTargetFolders)\cs\any\LitJson\%(RelativeDir)%(Filename).g%(Extension)" />
         <None Include="../LitJson/litjson.png" Pack="true" PackagePath="" />
+        <None Include="../../README.md" Pack="true" PackagePath="\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="NuGetizer" Version="0.7.5" PrivateAssets="All" />
+        <PackageReference Include="NuGetizer" Version="1.2.0" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="all" />
     </ItemGroup>
 
 </Project>
